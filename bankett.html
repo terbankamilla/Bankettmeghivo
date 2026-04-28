@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>13.E Bankett · 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200;300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:       #080c18;
+      --bg2:      #0c1120;
+      --bg3:      #111827;
+      --border:   #1a2540;
+      --border2:  #223060;
+      --accent:   #4a90e2;
+      --accent2:  #6faef5;
+      --accent-glow: rgba(74,144,226,0.15);
+      --text:     #c8d4e8;
+      --text-dim: #4a5a78;
+      --white:    #eaf0fb;
+      --mono:     'Share Tech Mono', monospace;
+      --sans:     'Exo 2', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(74,144,226,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74,144,226,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 1.2rem 5rem;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 3.5rem 0 2rem;
+    }
+
+    .hero-tag {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.18em;
+      margin-bottom: 1.2rem;
+      opacity: 0.8;
+    }
+
+    .hero-title {
+      font-size: clamp(2.8rem, 10vw, 4.2rem);
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 3.5vw, 1.35rem);
+      font-weight: 200;
+      color: var(--accent2);
+      letter-spacing: 0.06em;
+      margin-bottom: 2rem;
+    }
+
+    .hero-line {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, var(--accent), var(--border2), transparent);
+    }
+
+    /* SECTION LABEL */
+    .slabel {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin: 2rem 0 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .slabel::before {
+      content: '//';
+      color: var(--accent);
+      opacity: 0.7;
+    }
+
+    /* TEXT BLOCK */
+    .text-block {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 2px 4px 4px 2px;
+      padding: 1.5rem 1.8rem;
+    }
+    .text-block p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text);
+    }
+
+    /* PHOTO */
+    .photo-wrap {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .photo-wrap img {
+      width: 100%;
+      display: block;
+      filter: brightness(0.85) contrast(1.05) saturate(0.85);
+    }
+
+    /* INFO GRID */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+    }
+    @media (max-width: 480px) {
+      .info-grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.25rem 1.4rem;
+      position: relative;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .card:hover {
+      border-color: var(--border2);
+      box-shadow: 0 0 18px var(--accent-glow);
+    }
+    .card-full { grid-column: 1 / -1; }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 16px; height: 16px;
+      border-top: 1px solid var(--border2);
+      border-right: 1px solid var(--border2);
+      border-radius: 0 4px 0 0;
+    }
+
+    .card-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      opacity: 0.75;
+      margin-bottom: 0.55rem;
+    }
+    .card-main {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.35;
+      margin-bottom: 0.2rem;
+    }
+    .card-sub {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    /* MAP */
+    .map-wrap {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .map-wrap iframe {
+      display: block;
+      width: 100%;
+      height: 260px;
+      border: 0;
+      filter: grayscale(1) invert(1) brightness(0.75) sepia(0.2) hue-rotate(190deg);
+    }
+
+    /* CALENDAR BUTTON */
+    .cal-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      background: var(--bg2);
+      border: 1px solid var(--border2);
+      border-radius: 4px;
+      padding: 1.1rem 1.4rem;
+      color: var(--text);
+      transition: background 0.25s, border-color 0.25s, box-shadow 0.25s;
+    }
+    .cal-btn:hover {
+      background: var(--bg3);
+      border-color: var(--accent);
+      box-shadow: 0 0 20px var(--accent-glow);
+      color: var(--white);
+    }
+    .cal-btn-left {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .cal-icon {
+      width: 34px; height: 34px;
+      border: 1px solid var(--border2);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .cal-text-main {
+      font-weight: 600;
+      color: var(--white);
+      font-size: 0.9rem;
+    }
+    .cal-text-sub {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+    .cal-arrow {
+      color: var(--accent);
+      opacity: 0.6;
+      font-size: 1.1rem;
+    }
+
+    /* FOOTER */
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    footer p {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      color: var(--text-dim);
+    }
+    footer .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.5;
+    }
+
+    /* FADE IN */
+    [data-fade] {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    [data-fade].visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header class="hero" data-fade>
+    <div class="hero-tag">13.E &nbsp;·&nbsp; 2026</div>
+    <h1 class="hero-title">Meghívó </h1>
+    <div class="hero-sub">Bankett · 2026 </div>
+    <div class="hero-line"></div>
+  </header>
+
+  <div class="slabel" data-fade>Meghívó</div>
+  <div class="text-block" data-fade>
+    <p>
+      A <strong>13.E osztály</strong> nevében szeretettel meghívjuk Önt az utolsó évünket lezáró bankettünkre.
+      Egy kellemes estét szeretnénk tölteni tanárainkkal, megköszönve az elmúlt évek munkáját és támogatását.
+    </p>
+    <br />
+    <p>Örülnénk, ha megtisztelné jelenlétével ezt a különleges alkalmat.</p>
+  </div>
+
+  <div class="slabel" data-fade>Osztálykép</div>
+  <div class="photo-wrap" data-fade>
+    <img
+      src="osztalykep.JPG"
+      alt="13.E osztály"
+      loading="lazy"
+    />
+  </div>
+
+  <div class="slabel" data-fade>Részletek</div>
+  <div class="info-grid" data-fade>
+    <div class="card">
+      <div class="card-label">Dátum</div>
+      <div class="card-main">2026. június 24.</div>
+      <div class="card-sub">szerda</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Kezdés</div>
+      <div class="card-main">18:00</div>
+    </div>
+    <div class="card card-full">
+      <div class="card-label">Helyszín</div>
+      <div class="card-main">Törpe Kávézó &amp; Pub</div>
+      <div class="card-sub">Tisza Lajos krt. 41 &nbsp;·&nbsp; Szeged, 6722</div>
+    </div>
+    <div class="card card-full">
+      <div class="card-label">Vacsora</div>
+      <div class="card-main">Pizzatorony</div>
+      <div class="card-sub">biztosítja a vacsorát</div>
+    </div>
+  </div>
+
+  <div class="slabel" data-fade>Helyszín</div>
+  <div class="map-wrap" data-fade>
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2769.5637986456117!2d20.144737776884507!3d46.25311137112156!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47449a9fc9ad37b9%3A0xc94e01ab11a78eb0!2sTisza%20Lajos%20krt.%2041%2C%20Szeged%2C%206722!5e0!3m2!1shu!2shu!4v1714305600000!5m2!1shu!2shu"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="Helyszín térkép"
+    ></iframe>
+  </div>
+
+  <div class="slabel" data-fade>Esemény</div>
+  <div data-fade>
+    <a href="https://calendar.app.google/uo1ZvfgqqZZoERcK7" target="_blank" rel="noopener" class="cal-btn">
+      <div class="cal-btn-left">
+        <div class="cal-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        </div>
+        <div>
+          <div class="cal-text-main">Hozzáadás a naptárhoz</div>
+          <div class="cal-text-sub">Google Calendar &nbsp;·&nbsp; Érettségi Bankett</div>
+        </div>
+      </div>
+      <div class="cal-arrow">→</div>
+    </a>
+  </div>
+
+  <footer data-fade>
+    <p>13.E &nbsp;·&nbsp; SZEGED &nbsp;·&nbsp; 2026</p>
+    <div class="dot"></div>
+    <p>BANKETT</p>
+  </footer>
+
+</div>
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('[data-fade]').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
